@@ -11,3 +11,11 @@ async def init_db():
         """)
         await db.commit()
         print("База данных успешно инициализирована")
+
+async def add_user(user_id, username, first_name):
+    async with aiosqlite.connect("bot_database.db") as db:
+        await db.execute(
+            "INSERT OR IGNORE INTO users (user_id, username, first_name) VALUES (?, ?, ?)",
+            (user_id, username, first_name)
+        )
+        await db.commit()
